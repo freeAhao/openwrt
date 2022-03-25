@@ -129,8 +129,8 @@ jobs:
       if: steps.environment.outputs.status == 'success' && !cancelled()
       with:
         type: tar
-        path: openwrt/
-        directory: .
+        path: ./
+        directory: ./
         filename: openwrt.tar.gz
     
     - name: Move tar
