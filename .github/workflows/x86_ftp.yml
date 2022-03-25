@@ -129,7 +129,7 @@ jobs:
         path: /workdir/openwrt/
         directory: ./
         filename: openwrt.tar.gz
-        exclusions: '*.git* /*node_modules/* .editorconfig'
+        exclusions: '*.git*'
     
     - name: Move tar
       run: |
