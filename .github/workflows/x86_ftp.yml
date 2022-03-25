@@ -116,8 +116,7 @@ jobs:
     - name: Get environment path
       id: environment
       run: |
-        ls
-        mkdir $GITHUB_WORKSPACE/tar/
+        mkdir tar
         echo "WORKSPACE_DIR=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
         
@@ -127,8 +126,8 @@ jobs:
       if: steps.environment.outputs.status == 'success' && !cancelled()
       with:
         type: tar
-        path: $GITHUB_WORKSPACE/openwrt/
-        directory: $GITHUB_WORKSPACE/tar/
+        path: ../openwrt/
+        directory: tar/
         filename: openwrt.tar.gz
         
     - name: 📂 FTP Sync files
