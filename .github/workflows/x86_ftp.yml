@@ -115,7 +115,6 @@ jobs:
 
     - name: Get environment path
       id: environment
-      if: !cancelled()
       run: |
         mkdir tar
         echo "WORKSPACE_DIR=$PWD" >> $GITHUB_ENV
