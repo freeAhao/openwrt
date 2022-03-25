@@ -128,11 +128,13 @@ jobs:
         path: openwrt/
         directory: .
         filename: openwrt.tar.gz
-        
-    - name: 📂 FTP Sync files
+    
+    - name: Move tar
       run: |
         mkdir tar
         mv openwrt.tar.gz tar/
+        
+    - name: 📂 FTP Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.3.0
       # if: steps.environment.outputs.status == 'success' && steps.compile.outputs.status == 'success' && !cancelled()
       if: steps.environment.outputs.status == 'success' && !cancelled()
