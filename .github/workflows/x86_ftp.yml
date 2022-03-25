@@ -131,28 +131,28 @@ jobs:
         filename: openwrt.tar.gz
         exclusions: '*.git*'
     
-    - name: Move tar
-      run: |
-        mkdir tar
-        mv openwrt.tar.gz tar/
-        ls -alh tar/
-        
-    # - name: Upload firmware to cowtransfer
-    #   id: cowtransfer
-    #   if: steps.environment.outputs.status == 'success' && !cancelled()
+    # - name: Move tar
     #   run: |
-    #     curl -fsSL git.io/file-transfer | sh
-    #     ./transfer cow --block 2621440 -s -p 64 --no-progress tar/openwrt.tar.gz 2>&1 | tee cowtransfer.log
-    #     echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
-    #     echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
-
-    - name: 📂 FTP Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.3.0
-      # if: steps.environment.outputs.status == 'success' && steps.compile.outputs.status == 'success' && !cancelled()
+    #     mkdir tar
+    #     mv openwrt.tar.gz tar/
+    #     ls -alh tar/
+        
+    - name: Upload firmware to cowtransfer
+      id: cowtransfer
       if: steps.environment.outputs.status == 'success' && !cancelled()
-      with:
-        server: 118.122.97.21
-        port: 65021
-        username: test
-        password: ${{ secrets.ftp_password }}
-        local-dir: tar/
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer cow --block 2621440 -s -p 64 --no-progress openwrt.tar.gz 2>&1 | tee cowtransfer.log
+        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
+        echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
+
+    # - name: 📂 FTP Sync files
+    #   uses: SamKirkland/FTP-Deploy-Action@4.3.0
+    #   # if: steps.environment.outputs.status == 'success' && steps.compile.outputs.status == 'success' && !cancelled()
+    #   if: steps.environment.outputs.status == 'success' && !cancelled()
+    #   with:
+    #     server: 118.122.97.21
+    #     port: 65021
+    #     username: test
+    #     password: ${{ secrets.ftp_password }}
+    #     local-dir: tar/
