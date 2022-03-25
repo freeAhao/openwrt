@@ -126,7 +126,7 @@ jobs:
       if: steps.environment.outputs.status == 'success' && !cancelled()
       with:
         type: tar
-        path: ./openwrt/
+        path: /workdir/openwrt/
         directory: ./
         filename: openwrt.tar.gz
     
